@@ -1,18 +1,28 @@
-import React from "react";
-import "./Banner.css"
+
+import { useEffect, useState } from "react";
+import "./Banner.css";
+import axios from '../../axios';
+import { API_KEY , IMAGE_URL} from '../../constants/constants';
 function Banner() {
+  const [movie, setMovie] = useState()
+  useEffect(() => {
+   axios.get(`trending/all/day?api_key=${API_KEY}`).then((Response)=>{
+     console.log(Response.data.results[0])
+     setMovie(Response.data.results[0])
+   })
+  }, [])
+  
   return (
-    <div className="Banner">
+    <div
+    style={{backgroundImage : `url(${movie ? IMAGE_URL + movie.backdrop_path : " "})`}} className="Banner">
       <div className="content">
-        <h1 className="title">Movie name</h1>
+        <h1 className="title">{movie ? movie.title : " "}</h1>
         <div className="banner_buttons">
           <button className="button">play</button>
           <button className="button">My List</button>
         </div>
         <h1 className="description">
-          In publishing and graphic design, Lorem ipsum is a placeholder text
-          commonly used to demonstrate the visual form of a document or a
-          typeface without
+          {movie ? movie.overview : " "}
         </h1>
       </div>
       <div className="fade_bottom"></div>

@@ -1,22 +1,34 @@
-import React from 'react'
-import './RowPost.css'
+import React, { useEffect, useState } from "react";
+import "./RowPost.css";
+import axios from "../../axios";
+import {API_KEY,IMAGE_URL} from '../../constants/constants'
 function RowPost() {
+  const [movies, setMovies] = useState([])
+  useEffect(() => {
+    axios.get(`discover/tv?api_key=${API_KEY}&with_networks=213`).then((response)=>{
+      console.log(response.data)
+      setMovies(response.data.results)
+    }).catch(err=>{
+      alert('Network error')
+    });
+  }, []);
   return (
-    <div className='row'>
-        <h2>title</h2>
-        <div className='posters'>
-            <img className='poster' alt='poster'  src='https://i.pinimg.com/originals/88/43/1a/88431a9ed1430dd5359e13002b24c824.jpg'></img>
-            <img className='poster' alt='poster'  src='https://i.pinimg.com/originals/88/43/1a/88431a9ed1430dd5359e13002b24c824.jpg'></img>
-            <img className='poster' alt='poster'  src='https://i.pinimg.com/originals/88/43/1a/88431a9ed1430dd5359e13002b24c824.jpg'></img>
-            <img className='poster' alt='poster'  src='https://i.pinimg.com/originals/88/43/1a/88431a9ed1430dd5359e13002b24c824.jpg'></img>
-            <img className='poster' alt='poster'  src='https://i.pinimg.com/originals/88/43/1a/88431a9ed1430dd5359e13002b24c824.jpg'></img>
-            <img className='poster' alt='poster'  src='https://i.pinimg.com/originals/88/43/1a/88431a9ed1430dd5359e13002b24c824.jpg'></img>
-            <img className='poster' alt='poster'  src='https://i.pinimg.com/originals/88/43/1a/88431a9ed1430dd5359e13002b24c824.jpg'></img>
-            <img className='poster' alt='poster'  src='https://i.pinimg.com/originals/88/43/1a/88431a9ed1430dd5359e13002b24c824.jpg'></img>
-        </div>
+    <div className="row">
+      <h2>Netflix originals</h2>
 
+      <div className="posters">
+        {movies.map((obj)=>
+          <img
+          className="poster"
+          alt="poster"
+          src={`${IMAGE_URL+obj.backdrop_path}`}
+        ></img>
+        )}
+        
+        
+      </div>
     </div>
-  )
+  );
 }
 
-export default RowPost
+export default RowPost;
