@@ -15,4 +15,17 @@
 }
 .posters::-webkit-scrollbar{
     display: none;
+    cursor: pointer;
+}
+.smallPoster {
+    max-height: 150px;
+    max-width: 100%;
+    margin-right: 10px;
+    cursor: pointer;
+}
+.poster:hover{
+    transform: scale(1.1);
+}
+.smallPoster:hover{
+    transform: scale(1.1);
 }
